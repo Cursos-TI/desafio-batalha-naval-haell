@@ -4,11 +4,59 @@
 // Este código inicial serve como base para o desenvolvimento do sistema de Batalha Naval.
 // Siga os comentários para implementar cada parte do desafio.
 
-int main() {
-    // Nível Novato - Posicionamento dos Navios
-    // Sugestão: Declare uma matriz bidimensional para representar o tabuleiro (Ex: int tabuleiro[5][5];).
-    // Sugestão: Posicione dois navios no tabuleiro, um verticalmente e outro horizontalmente.
-    // Sugestão: Utilize `printf` para exibir as coordenadas de cada parte dos navios.
+int main()
+{
+    // Nível Novato
+
+    // Declaração do tabuleiro 10x10
+    int tabuleiro[10][10] = {0}; // Inicializa o tabuleiro com 0 (vazio)
+
+    // Criando o primeiro navio
+    int navio1[3] = {3, 3, 3}; // Representa um navio de 3 partes
+
+    // Criando o segundo navio
+    int navio2[4] = {4, 4, 4, 4}; // Representa outro navio de 3 partes
+
+    // Criando o terceiro navio
+    int navio3[3] = {3, 3, 3}; // Representa um navio de 3 partes
+
+    // Definir a posição inicial do navio1 (linha 2, coluna 4)
+    int linhaInicialNavio1 = 1;
+    int colunaInicialNavio1 = 2;
+    // Posicionar o navio1 no tabuleiro, na horizontal
+    for (int i = 0; i < 3; i++)
+    {
+        tabuleiro[linhaInicialNavio1][colunaInicialNavio1 + i] = navio1[i];
+    }
+
+    // Definir a posição inicial do navio2 (linha 4, coluna 7)
+    int linhaInicialNavio1Navio2 = 4;
+    int colunaInicialNavio2 = 7;
+    // Posicionar o navio2 no tabuleiro, verticalmente
+    for (int i = 0; i < 4; i++)
+    {
+        tabuleiro[linhaInicialNavio1Navio2 + i][colunaInicialNavio2] = navio2[i];
+    }
+
+     // Navio adicional de 3 partes
+     int linhaIncialNavio3 = 6;   // Linha inicial do navio 3
+     int colunaInicialNavio3 = 1; // Coluna inicial do navio 3
+     // Posicionar o navio3 no tabuleiro, na vertical
+     for (int i = 0; i < 3; i++)
+     {
+         tabuleiro[linhaIncialNavio3 + i][colunaInicialNavio3] = navio3[i];
+     }
+
+    // Mostrar o tabuleiro no console
+    printf("Tabuleiro:\n");
+    for (int i = 0; i < 10; i++)
+    { // percorre linhas
+        for (int j = 0; j < 10; j++)
+        { // percorre colunas
+            printf("%d ", tabuleiro[i][j]);
+        }
+        printf("\n"); // quebra de linha ao final de cada linha
+    }
 
     // Nível Aventureiro - Expansão do Tabuleiro e Posicionamento Diagonal
     // Sugestão: Expanda o tabuleiro para uma matriz 10x10.
@@ -25,7 +73,7 @@ int main() {
     // 0 0 1 0 0
     // 0 1 1 1 0
     // 1 1 1 1 1
-    
+
     // Exemplo para habilidade em octaedro:
     // 0 0 1 0 0
     // 0 1 1 1 0
