@@ -1,9 +1,29 @@
 #include <stdio.h>
 
-// Desafio Batalha Naval - MateCheck
-// Este código inicial serve como base para o desenvolvimento do sistema de Batalha Naval.
-// Siga os comentários para implementar cada parte do desafio.
+// Função para aplicar uma habilidade no tabuleiro com base em uma matriz
+void aplicarHabilidade(int tabuleiro[10][10], int origemLinha, int origemColuna, int habilidade[3][5], int habilidadeLinha, int habilidadeColuna)
+{
+    for (int i = 0; i < habilidadeLinha; i++)
+    {
+        for (int j = 0; j < habilidadeColuna; j++)
+        {
+            if (habilidade[i][j] == 1)
+            {
+                int linhaAlvo = origemLinha + i - 1; // centraliza a matriz (assumindo 3x5)
+                int colunaAlvo = origemColuna + j - 2;
 
+                // Verifica se está dentro dos limites do tabuleiro
+                if (linhaAlvo >= 0 && linhaAlvo < 10 && colunaAlvo >= 0 && colunaAlvo < 10)
+                {
+                    tabuleiro[linhaAlvo][colunaAlvo] += 1; // marca como atingido
+                }
+            }
+        }
+    }
+}
+
+// Desafio Batalha Naval - Haell NIVEL MESTRE
+// Este código inicial serve como base para o desenvolvimento do sistema de Batalha Naval.
 int main()
 {
     // Definindo tipos de navios
@@ -20,7 +40,7 @@ int main()
     for (int i = 0; i < tamanhoTabuleiro; i++)
     { // percorre linhas
         for (int j = 0; j < tamanhoTabuleiro; j++)
-        { // percorre colunas
+        {                        // percorre colunas
             tabuleiro[i][j] = 0; // Preenche o tabuleiro com 0 (vazio)
         }
     }
@@ -90,7 +110,7 @@ int main()
     }
 
     // Mostrar o tabuleiro no console
-    printf("Tabuleiro:\n");
+    printf("\nTabuleiro com os navios posicionados (antes do ataque):\n");
     for (int i = 0; i < tamanhoTabuleiro; i++)
     { // percorre linhas
         for (int j = 0; j < tamanhoTabuleiro; j++)
@@ -100,31 +120,162 @@ int main()
         printf("\n"); // quebra de linha ao final de cada linha
     }
 
-    // Nível Aventureiro - Expansão do Tabuleiro e Posicionamento Diagonal
-    // Sugestão: Expanda o tabuleiro para uma matriz 10x10.
-    // Sugestão: Posicione quatro navios no tabuleiro, incluindo dois na diagonal.
-    // Sugestão: Exiba o tabuleiro completo no console, mostrando 0 para posições vazias e 3 para posições ocupadas.
+    // #### Definindo matrizes para habilidades especiais ####
 
-    // Nível Mestre - Habilidades Especiais com Matrizes
-    // Sugestão: Crie matrizes para representar habilidades especiais como cone, cruz, e octaedro.
-    // Sugestão: Utilize estruturas de repetição aninhadas para preencher as áreas afetadas por essas habilidades no tabuleiro.
-    // Sugestão: Exiba o tabuleiro com as áreas afetadas, utilizando 0 para áreas não afetadas e 1 para áreas atingidas.
+    // Definindo tamanho da linha e coluna para habilidades CONE
+    int coneLinha = 3;  // Tamanho da linha
+    int coneColuna = 5; // Tamanho da coluna
 
-    // Exemplos de exibição das habilidades:
-    // Exemplo para habilidade em cone:
-    // 0 0 1 0 0
-    // 0 1 1 1 0
-    // 1 1 1 1 1
+    // Definindo habilidade em cone
+    int habilidadeCone[coneLinha][coneColuna]; // Matriz para habilidade em cone
+    // Construindo habilidade em cone
+    for (int i = 0; i < coneLinha; i++)
+    { // percorre linhas
+        for (int j = 0; j < coneColuna; j++)
+        {                             // percorre colunas
+            habilidadeCone[i][j] = 1; // Preenche a matriz com 0 (não afetada)
+        }
+    }
 
-    // Exemplo para habilidade em octaedro:
-    // 0 0 1 0 0
-    // 0 1 1 1 0
-    // 0 0 1 0 0
+    // Imprimindo a matriz de habilidade em cone
+    printf("\nHabilidade em Cone:\n");
+    // Construindo habilidade em cone dinamicamente
+    for (int i = 0; i < coneLinha; i++)
+    { // percorre linhas
+        for (int j = 0; j < coneColuna; j++)
+        { // percorre colunas
+            if (j >= (coneColuna / 2) - i && j <= (coneColuna / 2) + i)
+            {
+                habilidadeCone[i][j] = 1; // Preenche a matriz com 1 (afetada)
+            }
+            else
+            {
+                habilidadeCone[i][j] = 0; // Preenche a matriz com 0 (não afetada)
+            }
+        }
+    }
+    for (int i = 0; i < coneLinha; i++)
+    { // percorre linhas
+        for (int j = 0; j < coneColuna; j++)
+        { // percorre colunas
+            printf("%d ", habilidadeCone[i][j]);
+        }
+        printf("\n"); // quebra de linha ao final de cada linha
+    }
 
-    // Exemplo para habilidade em cruz:
-    // 0 0 1 0 0
-    // 1 1 1 1 1
-    // 0 0 1 0 0
+    // Definindo tamanho da linha e coluna para habilidades octaedro
+    int octaLinha = 3;  // Tamanho da linha
+    int octaColuna = 5; // Tamanho da coluna
+    // Definindo habilidade em octaedro
+    int habilidadeOctaedro[octaLinha][octaColuna]; // Matriz para habilidade em octaedro
+    // Construindo habilidade em octaedro
+    for (int i = 0; i < octaLinha; i++)
+    {
+        for (int j = 0; j < octaColuna; j++)
+        {
+            if ((i == 0 || i == 2) && j == 2)
+            {
+                habilidadeOctaedro[i][j] = 1;
+            }
+            else if (i == 1 && j >= 1 && j <= 3)
+            {
+                habilidadeOctaedro[i][j] = 1;
+            }
+            else
+            {
+                habilidadeOctaedro[i][j] = 0;
+            }
+        }
+    }
+    // Imprimindo a matriz de habilidade em octaedro
+    printf("\nHabilidade em Octaedro:\n");
+    for (int i = 0; i < octaLinha; i++)
+    { // percorre linhas
+        for (int j = 0; j < octaColuna; j++)
+        { // percorre colunas
+            printf("%d ", habilidadeOctaedro[i][j]);
+        }
+        printf("\n"); // quebra de linha ao final de cada linha
+    }
+
+    // Definindo tamanho da linha e coluna para habilidades cruz
+    int cruzLinha = 3;  // Tamanho da linha
+    int cruzColuna = 5; // Tamanho da coluna
+    // Definindo habilidade em cruz
+    int habilidadeCruz[cruzLinha][cruzColuna]; // Matriz para habilidade em cruz
+    // Construindo habilidade em cruz
+    for (int i = 0; i < cruzLinha; i++)
+    {
+        for (int j = 0; j < cruzColuna; j++)
+        {
+            if (j == 2 || i == 1)
+            {
+                habilidadeCruz[i][j] = 1;
+            }
+            else
+            {
+                habilidadeCruz[i][j] = 0;
+            }
+        }
+    }
+    // Imprimindo a matriz de habilidade em cruz
+    printf("\nHabilidade em Cruz:\n");
+    for (int i = 0; i < cruzLinha; i++)
+    { // percorre linhas
+        for (int j = 0; j < cruzColuna; j++)
+        { // percorre colunas
+            printf("%d ", habilidadeCruz[i][j]);
+        }
+        printf("\n"); // quebra de linha ao final de cada linha
+    }
+
+    // ##### ---------------------- Implementação do ataque ---------------------- #####
+
+    // Escolha da habilidade
+    int escolhaHabilidade; // Declaração da variável escolhaHabilidade
+    printf("\nEscolha a habilidade para usar:\n");
+    printf("1 - Cone\n");
+    printf("2 - Octaedro\n");
+    printf("3 - Cruz\n");
+    printf("Digite sua escolha: ");
+    scanf("%d", &escolhaHabilidade);
+
+    // Escolha da posição de origem do ataque
+    int origemLinha, origemColuna;
+    printf("Digite a linha de origem do ataque (0 a 9): ");
+    scanf("%d", &origemLinha);
+    printf("Digite a coluna de origem do ataque (0 a 9): ");
+    scanf("%d", &origemColuna);
+
+    // Aplicando a habilidade escolhida
+    switch (escolhaHabilidade)
+    {
+    case 1:
+        aplicarHabilidade(tabuleiro, origemLinha, origemColuna, habilidadeCone, coneLinha, coneColuna);
+        break;
+    case 2:
+        aplicarHabilidade(tabuleiro, origemLinha, origemColuna, habilidadeOctaedro, octaLinha, octaColuna);
+        break;
+    case 3:
+        aplicarHabilidade(tabuleiro, origemLinha, origemColuna, habilidadeCruz, cruzLinha, cruzColuna);
+        break;
+    default:
+        printf("Opção inválida.\n");
+        break;
+    }
+
+    // Mostrar o tabuleiro atualizado após o ataque
+    printf("\nTabuleiro apos ataque:\n");
+    for (int i = 0; i < tamanhoTabuleiro; i++)
+    {
+        for (int j = 0; j < tamanhoTabuleiro; j++)
+        {
+            printf("%d ", tabuleiro[i][j]);
+        }
+        printf("\n");
+    }
+
+    printf("\n\nLEGENDA:\n0 - agua\n3 - parte do navio\n1 - Tiro na agua\n4 - Tiro no navio\n");
 
     return 0;
 }
